@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Predict numbers</title>
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<main class="max-w-screen-lg mx-auto"></main>
+
+<script src="PredictNumbers.js" type="text/babel"></script>
+<script src="DrawableCanvas.js" type="text/babel"></script>
+
+<script type="text/babel">
+  ReactDOM.render(<PredictNumbers />, document.querySelector('main'));
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "predict-numbers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon .",
+    "lint": "eslint",
+    "train": "node --es-module-specifier-resolution=node src/train/train.js"
+  },
+  "author": "Jonas Brems",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.4.0",
+    "@tensorflow/tfjs-node": "^3.5.0",
+    "express": "^4.17.1",
+    "jimp": "^0.16.1"
+  }
+}
