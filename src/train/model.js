@@ -1,6 +1,6 @@
-import * as tf from '@tensorflow/tfjs-node';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import * as tf from '@tensorflow/tfjs-node';
 
 export function getModel () {
   const model = tf.sequential();

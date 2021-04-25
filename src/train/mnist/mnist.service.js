@@ -54,26 +54,6 @@ export class MnistService {
     return { x: this.tensorCache[index], y: this.getSingleLabelDistribution(index) };
   }
 
-  printRedChannel (redChannel, batchSize = 1) {
-    for (let nr = 0; nr < batchSize; nr++) {
-      console.log('╔════════════════════════════════════════════════════════════════════════════════════╗');
-      let logline = '';
-      for (let i = nr * 28 * 28; i < (nr + 1) * 28 * 28; i++) {
-        if (redChannel[i] === 0) logline += '   ';
-        else if (redChannel[i] < 64) logline += '░░░';
-        else if (redChannel[i] < 128) logline += '▒▒▒';
-        else if (redChannel[i] < 172) logline += '▓▓▓';
-        else logline += '███';
-
-        if (logline.length === 28 * 3) {
-          console.log('║' + logline + '║');
-          logline = '';
-        }
-      }
-      console.log('╚════════════════════════════════════════════════════════════════════════════════════╝');
-    }
-  }
-
   getTrainingBatch (batchSize, offset = 0) {
     console.log(`Getting training batch ${offset} - ${offset + batchSize}`);
 
@@ -88,5 +68,25 @@ export class MnistService {
     const ys = tf.tensor2d(labels, [batchSize, 10]);
 
     return { xs, ys };
+  }
+}
+
+export function printRedChannel (redChannel, batchSize = 1) {
+  for (let nr = 0; nr < batchSize; nr++) {
+    console.log('╔════════════════════════════════════════════════════════════════════════════════════╗');
+    let logline = '';
+    for (let i = nr * 28 * 28; i < (nr + 1) * 28 * 28; i++) {
+      if (redChannel[i] === 0) logline += '   ';
+      else if (redChannel[i] < 64) logline += '░░░';
+      else if (redChannel[i] < 128) logline += '▒▒▒';
+      else if (redChannel[i] < 172) logline += '▓▓▓';
+      else logline += '███';
+
+      if (logline.length === 28 * 3) {
+        console.log('║' + logline + '║');
+        logline = '';
+      }
+    }
+    console.log('╚════════════════════════════════════════════════════════════════════════════════════╝');
   }
 }

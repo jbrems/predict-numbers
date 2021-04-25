@@ -45,7 +45,7 @@ class DrawableCanvas extends React.Component {
 
     this.ctx.beginPath();
 
-    this.ctx.lineWidth = 10;
+    this.ctx.lineWidth = 30;
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = '#ffffff';
 
@@ -61,31 +61,24 @@ class DrawableCanvas extends React.Component {
 
   reset () {
     this.ctx.clearRect(0, 0, 280, 280);
+    this.props.onImageUpdate(undefined);
   }
 
   updateThumbnail () {
+    const imagePixels = [];
     for (let i = 0; i < 28; i++) {
       for (let j = 0; j < 28; j++) {
-        const segment = this.ctx.getImageData(i * 10, j * 10, 10, 10);
+        const segment = this.ctx.getImageData(j * 10, i * 10, 10, 10);
         const pixels = segment.data;
         // 4 values for every pixel: r, g, b and alpha
         const redValues = pixels.filter((pixel, index) => index % 4 === 0);
         const summedRedValues = redValues.reduce((sum, value) =>  sum + value, 0);
         const avgRedValue = Math.ceil(summedRedValues / 100);
-
-        const thumbnailPixel = new ImageData(Uint8ClampedArray.from([avgRedValue, avgRedValue, avgRedValue, 255]), 1, 1);
-
-        this.ctx.putImageData(thumbnailPixel, i, j);
+        imagePixels.push(avgRedValue);
       }
     }
 
-    this.ctx.beginPath();
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = '#ffffff';
-    this.ctx.moveTo(0, 28);
-    this.ctx.lineTo(28, 28);
-    this.ctx.lineTo(28, 0);
-    this.ctx.stroke();
+    this.props.onImageUpdate(imagePixels);
   }
 
   render () {
