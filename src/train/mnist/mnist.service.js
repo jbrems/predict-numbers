@@ -8,8 +8,6 @@ export class MnistService {
   constructor () {
     this.imageCache = [];
     this.tensorCache = [];
-
-    this.nextBatchIndex = 0;
   }
 
   async init () {
@@ -76,20 +74,18 @@ export class MnistService {
     }
   }
 
-  getTrainingBatch (batchSize) {
-    console.log(`Getting training batch ${this.nextBatchIndex} - ${this.nextBatchIndex + batchSize}`);
+  getTrainingBatch (batchSize, offset = 0) {
+    console.log(`Getting training batch ${offset} - ${offset + batchSize}`);
 
     const image = this.masterImage.clone();
-    image.crop(0, this.nextBatchIndex, 28 * 28, batchSize);
+    image.crop(0, offset, 28 * 28, batchSize);
     const redChannel = image.bitmap.data.filter((val , index) => index % 4 === 0).slice(0, 28 * 28 * batchSize);
     // this.printRedChannel(redChannel, batchSize);
     const images = tf.tensor2d(redChannel, [batchSize, 28 * 28]);
     const xs = images.reshape([batchSize, 28, 28, 1]);
 
-    const labels = this.labels.slice(this.nextBatchIndex * 10, (this.nextBatchIndex + batchSize) * 10);
+    const labels = this.labels.slice(offset * 10, (offset + batchSize) * 10);
     const ys = tf.tensor2d(labels, [batchSize, 10]);
-
-    this.nextBatchIndex += batchSize;
 
     return { xs, ys };
   }

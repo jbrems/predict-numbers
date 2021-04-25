@@ -7,7 +7,8 @@
   "scripts": {
     "start": "nodemon .",
     "lint": "eslint",
-    "train": "node --es-module-specifier-resolution=node src/train/train.js"
+    "train": "node --es-module-specifier-resolution=node src/train/train.js",
+    "predict": "node --es-module-specifier-resolution=node src/predict/predict.js"
   },
   "author": "Jonas Brems",
   "license": "ISC",

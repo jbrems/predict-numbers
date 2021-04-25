@@ -1,4 +1,6 @@
 import * as tf from '@tensorflow/tfjs-node';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 export function getModel () {
   const model = tf.sequential();
@@ -50,4 +52,16 @@ export function getModel () {
   });
 
   return model;
+}
+
+export async function saveModel (model) {
+  console.log('Saving model');
+  const location = join(dirname(fileURLToPath(import.meta.url)), 'models', 'latest').replace('C:\\', 'file:\\\\\\').replace(/\\/g, '/');
+  console.log(`Saving model to ${location}`);
+  return model.save(location);
+}
+
+export async function loadBestModel () {
+  const location = join(dirname(fileURLToPath(import.meta.url)), 'models', 'best', 'model.json').replace('C:\\', 'file:\\\\\\').replace(/\\/g, '/');
+  return tf.loadLayersModel(location);
 }
