@@ -47,7 +47,7 @@ export class MnistService {
       const image = this.masterImage.clone();
       image.crop(0, index, 28 * 28, 1);
       const redChannel = image.bitmap.data.filter((val , index) => index % 4 === 0).slice(0, 28 * 28);
-      this.printRedChannel(redChannel);
+      printRedChannel(redChannel);
       this.tensorCache[index] = tf.tensor2d(redChannel, [1, 28 * 28]);
     }
 
@@ -60,14 +60,18 @@ export class MnistService {
     const image = this.masterImage.clone();
     image.crop(0, offset, 28 * 28, batchSize);
     const redChannel = image.bitmap.data.filter((val , index) => index % 4 === 0).slice(0, 28 * 28 * batchSize);
+
     // this.printRedChannel(redChannel, batchSize);
-    const images = tf.tensor2d(redChannel, [batchSize, 28 * 28]);
-    const xs = images.reshape([batchSize, 28, 28, 1]);
 
-    const labels = this.labels.slice(offset * 10, (offset + batchSize) * 10);
-    const ys = tf.tensor2d(labels, [batchSize, 10]);
+    return tf.tidy(() => {
+      const images = tf.tensor2d(redChannel, [batchSize, 28 * 28]);
+      const xs = images.reshape([batchSize, 28, 28, 1]);
 
-    return { xs, ys };
+      const labels = this.labels.slice(offset * 10, (offset + batchSize) * 10);
+      const ys = tf.tensor2d(labels, [batchSize, 10]);
+
+      return { xs, ys };
+    });
   }
 }
 

@@ -1,4 +1,4 @@
 .idea
 node_modules
 
-src/train/models/best
+src/train/models/latest

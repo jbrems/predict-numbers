@@ -1,3 +1,4 @@
+import * as tf from '@tensorflow/tfjs-node';
 import { MnistService } from './mnist/mnist.service';
 import { getModel, saveModel } from './model';
 
@@ -6,9 +7,13 @@ import { getModel, saveModel } from './model';
 
   const mnistService = new MnistService();
   await mnistService.init();
-  const trainingBatch = mnistService.getTrainingBatch(64000);
 
+  const trainingBatch = mnistService.getTrainingBatch(64000);
   await train(model, trainingBatch);
+
+  trainingBatch.xs.dispose();
+  trainingBatch.ys.dispose();
+
   await saveModel(model);
 })();
 
