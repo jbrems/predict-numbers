@@ -19,8 +19,8 @@ class PredictButton extends React.Component {
     });
 
     const prediction = await response.json();
-    const highestCertainty = Math.max(...prediction);
-    alert(`I am ${Math.floor(highestCertainty * 100)}% sure this is a ${prediction.indexOf(highestCertainty)}`);
+    console.log('Updating prediction from button', prediction);
+    this.props.updatePrediction(prediction);
   }
 
   render () {
