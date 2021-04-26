@@ -9,7 +9,15 @@ import { getModel, saveModel } from './model';
   await mnistService.init();
 
   const trainingBatch = mnistService.getTrainingBatch(64000);
-  await train(model, trainingBatch);
+
+  let accuracyLossCounter = 0;
+  let highestAccuracy = 0;
+  while (accuracyLossCounter < 5) {
+    const { history } = await train(model, trainingBatch);
+    if (history.acc[0] < highestAccuracy) accuracyLossCounter++;
+    highestAccuracy = Math.max(history.acc[0], highestAccuracy);
+    console.log(`Highest accuracy: ${highestAccuracy}, Accuracy loss: ${accuracyLossCounter}/5`);
+  }
 
   trainingBatch.xs.dispose();
   trainingBatch.ys.dispose();
@@ -20,11 +28,13 @@ import { getModel, saveModel } from './model';
 async function train (model, trainingBatch) {
   console.log('Training model');
 
-  await model.fit(trainingBatch.xs, trainingBatch.ys, {
+  const result = await model.fit(trainingBatch.xs, trainingBatch.ys, {
     batchSize: 512,
     validationSplit: 0.2,
     epochs: 1,
     shuffle: true,
   });
   console.log('Training done');
+
+  return result;
 }
