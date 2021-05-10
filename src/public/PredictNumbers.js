@@ -27,7 +27,7 @@ class PredictNumbers extends React.Component {
         <DrawableCanvas onImageUpdate={this.updateImage} />
         <PredictButton image={this.state.image} updatePrediction={this.updatePrediction}/>
       </section>
-      <Prediction prediction={this.state.prediction} />
+      <Prediction prediction={this.state.prediction} image={this.state.image} />
     </section>;
   }
 }

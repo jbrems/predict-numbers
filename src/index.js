@@ -8,4 +8,4 @@ const app = express();
 app.use('/', express.static(join(dirname(fileURLToPath(import.meta.url)), 'public')));
 app.use('/predict', getPredictRoutes());
 
-app.listen(3000, console.log('Server running'));
+app.listen(3000, console.log('Server running on port 3000'));

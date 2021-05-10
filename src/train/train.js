@@ -1,4 +1,3 @@
-import * as tf from '@tensorflow/tfjs-node';
 import { MnistService } from './mnist/mnist.service';
 import { getModel, saveModel } from './model';
 
